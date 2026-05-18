@@ -1,0 +1,54 @@
+version: "3"
+services:
+  frontend:
+    build:
+      context: "./frontend"
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    container_name: frontend_container
+    environment:
+      - WATCHPACK_POOLIN=true
+    networks:
+      - chatHub_network
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: "./backend"
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    container_name: backend_container
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/chathub
+      - JWT_SECRET=secret
+      - PORT=5000
+    networks:
+      - chatHub_network
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo_db
+    ports:
+      - 27017:27017
+    networks:
+      - chatHub_network
+    volumes:
+      - mongo_data:/data/db
+
+networks:
+  chatHub_network:
+
+
+volumes:
+  mongo_data:
