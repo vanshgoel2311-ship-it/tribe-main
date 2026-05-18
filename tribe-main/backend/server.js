@@ -38,7 +38,7 @@ app.use("/api/status", statusRoutes);
 app.use(notFound); // if url not found
 app.use(errorHandler); // any other error
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 
 const server = app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server Started on port ${PORT}`);
