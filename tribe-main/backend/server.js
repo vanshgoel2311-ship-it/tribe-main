@@ -40,9 +40,10 @@ app.use(errorHandler); // any other error
 
 const PORT = process.env.PORT || 5000;
 
-const server = app.listen(PORT, console.log(`Server Started on Port ${PORT}`));
-console.log("BACKEND RESTARTED WITH DEBUG LOGS");
-
+const server = app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server Started on port ${PORT}`);
+  console.log("BACKEND RESTARTED WITH DEBUG LOGS");
+});
 // Socket.io
 const io = require("socket.io")(server, {
   pingTimeout: 6000,
